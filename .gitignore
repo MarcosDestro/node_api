@@ -1,9 +1,8 @@
-# Logs
-
 node_modules
 dist
 dist-ssr
 *.local
+_info.txt
 
 # Editor directories and files
 .vscode/*
