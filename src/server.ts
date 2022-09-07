@@ -1,14 +1,11 @@
+// Lê as variaveis de ambiente
+require('dotenv').config();
+
 import express, { Request, Response } from 'express';
 import path from 'path';
-import * as dotenv from 'dotenv';
 import apiRoutes from './routes/apiRoutes';
 import cors from 'cors';
 import { sequelize } from './instances/pg';
-import { Phrase } from './models/Phrase';
-
-
-// Lê as variaveis de ambiente
-dotenv.config();
 
 // Inicia a instancia do express
 const app = express();
