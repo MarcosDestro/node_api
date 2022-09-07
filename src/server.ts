@@ -9,6 +9,7 @@ import { sequelize } from './instances/pg';
 
 // Inicia a instancia do express
 const app = express();
+
 // Inicia o cors, podendo passar a função vazia para liberar tudo
 app.use(cors({
     origin: '*',
