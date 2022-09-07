@@ -25,7 +25,7 @@ app.use(express.urlencoded({extended: true}));
 // Chama as rotas
 app.use('/api', apiRoutes);
 
-app.get('/testeConnection', async (req, res)=>{
+app.get('/testConnection', async (req, res)=>{
     try {
         await sequelize.authenticate();
         res.json({connection: 'ok'});
