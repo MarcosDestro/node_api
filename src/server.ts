@@ -1,7 +1,7 @@
 // Lê as variaveis de ambiente
 require('dotenv').config();
 
-import express, { Request, Response } from 'express';
+import express, { Request, Response, ErrorRequestHandler } from 'express';
 import path from 'path';
 import apiRoutes from './routes/apiRoutes';
 import cors from 'cors';
@@ -40,6 +40,14 @@ app.use((req: Request, res: Response)=>{
     res.status(404);
     res.json({error: 'Endpoint não encontrado.'})
 })
+
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+    res.status(400); // Bad Request
+    console.log(err);
+    res.json({ error: 'Ocorreu algum erro.' });
+}
+app.use(errorHandler);
+
 
 // Porta padrão
 app.listen(process.env.PORT);

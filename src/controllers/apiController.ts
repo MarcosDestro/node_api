@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Sequelize } from 'sequelize';
 import { Phrase } from '../models/Phrase';
+import { User } from '../models/User';
 
 // Retorna uma reposta para o ping
 export const ping = (req: Request, res: Response) => {
