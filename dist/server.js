@@ -43,15 +43,6 @@ app.get('/testConnection', (req, res) => __awaiter(void 0, void 0, void 0, funct
         return console.error('Unable to connect to the database:', error);
     }
 }));
-app.get('/test-db-url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return res.json({
-        dbname: process.env.DB_NAME,
-        dbuser: process.env.DB_USER,
-        dbpass: process.env.DB_PASSWORD,
-        dbport: process.env.DB_PORT,
-        dbhost: process.env.DB_HOST,
-    });
-}));
 // Resposta para qualquer rota não encontrada
 app.use((req, res) => {
     res.status(404);

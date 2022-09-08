@@ -35,16 +35,6 @@ app.get('/testConnection', async (req, res)=>{
       }
 });
 
-app.get('/test-db-url', async (req, res)=>{
-    return res.json({
-        dbname: process.env.DB_NAME,
-        dbuser: process.env.DB_USER,
-        dbpass: process.env.DB_PASSWORD,
-        dbport: process.env.DB_PORT,
-        dbhost: process.env.DB_HOST,
-    });
-});
-
 // Resposta para qualquer rota não encontrada
 app.use((req: Request, res: Response)=>{
     res.status(404);
