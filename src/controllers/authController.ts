@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 import { Request, Response } from 'express';
-import { User } from '../models/User';
+import { User, UserInstance } from '../models/User';
 import JWT from 'jsonwebtoken';
 
 export const register = async (req: Request, res: Response) => {
@@ -55,7 +55,7 @@ export const login = async (req: Request, res: Response) => {
         { id: user.id, email: user.email },
         process.env.JWT_SECRET_KEY as string,
         {
-            // expiresIn: 60 * 2,
+            expiresIn: process.env.JWT_EXPIRES as string,
         }
     );
 
@@ -63,24 +63,27 @@ export const login = async (req: Request, res: Response) => {
     return res.json({ status: 'logged', token });
 }
 
+/**
+ * Tras as informações do cadastro
+ */
 export const me = async (req: Request, res: Response)=>{
-    if(req.headers.authorization){
-        const [ authType, token ] = req.headers.authorization.split(' ');
+    if(!req.headers.authorization){
+        return res.json({ error: 'Informe todos os dados para continuar' });
+    }
 
-        const decoded = JWT.verify(
-            token, // Envia token 
-            process.env.JWT_SECRET_KEY as string // Envia secret_key
-        );
+    const [ , token ] = req.headers.authorization.split(' ');
+    const decoded = JWT.verify(
+        token, // Envia token 
+        process.env.JWT_SECRET_KEY as string // Envia secret_key
+    );
 
-        if(decoded){
-            let { email }: any = decoded;
-            // Analisar melhor
-        }
-    } 
-
-    return res.json({});
+    let { email, id }: any = decoded;
+    return res.json({ id, email });
 }
 
-export const dash = (req: Request, res: Response)=>{
+/**
+ * Painel privado
+ */
+export const dash = async (req: Request, res: Response)=>{
     return res.json({message: 'Bem-vindo!'});
 }
