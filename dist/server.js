@@ -48,5 +48,11 @@ app.use((req, res) => {
     res.status(404);
     res.json({ error: 'Endpoint não encontrado.' });
 });
+const errorHandler = (err, req, res, next) => {
+    res.status(400); // Bad Request
+    console.log(err);
+    res.json({ error: 'Ocorreu algum erro.' });
+};
+app.use(errorHandler);
 // Porta padrão
 app.listen(process.env.PORT);

@@ -25,6 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ApiController = __importStar(require("../controllers/apiController"));
+const AuthController = __importStar(require("../controllers/authController"));
+const auth_1 = require("../middlewares/auth");
 const router = (0, express_1.Router)();
 router.get('/ping', ApiController.ping);
 router.get('/random', ApiController.random);
@@ -35,4 +37,9 @@ router.get('/frases/aleatoria', ApiController.randomPhrase);
 router.get('/frases/:id', ApiController.getPhrase);
 router.put('/frases/:id', ApiController.updatePhrase);
 router.delete('/frases/:id', ApiController.deletePhrase);
+router.post('/register', AuthController.register);
+router.post('/login', AuthController.login);
+// Rota protegida
+router.get('/dashboard', auth_1.Auth.private, AuthController.dash);
+router.post('/me', auth_1.Auth.private, AuthController.me);
 exports.default = router;

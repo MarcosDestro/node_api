@@ -2,20 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sequelize = void 0;
 require('dotenv').config();
-// import dotenv from 'dotenv';
 const sequelize_1 = require("sequelize");
-// dotenv.config();
-exports.sequelize = new sequelize_1.Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    dialect: 'postgres',
-    port: parseInt(process.env.DB_PORT),
-    host: process.env.DB_HOST,
+let database = '';
+if (process.env.PORT != process.env.PORT_DEV) {
+    database = process.env.DATABASE_URL;
 }
-// 'phrases',
-// 'postgres',
-// '1234',
-// {
-//     dialect: 'postgres',
-//     port: parseInt('5432'),
-//     host: 'localhost'
-// }
-);
+else {
+    database = process.env.DATABASE_DEV;
+}
+exports.sequelize = new sequelize_1.Sequelize(database, { ssl: true });
+exports.sequelize.authenticate()
+    .then(() => console.info('Connection has been established successfully.'))
+    .catch((error) => console.error('Unable to connect to the database:', error));
+// export const sequelize = new Sequelize(
+//     process.env.DB_NAME as string,
+//     process.env.DB_USER as string,
+//     process.env.DB_PASSWORD as string,
+//     {
+//         dialect: 'postgres',
+//         port: parseInt(process.env.DB_PORT as string),
+//         host: process.env.DB_HOST as string,
+//     }
+// )
